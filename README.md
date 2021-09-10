@@ -11,3 +11,17 @@
       Prashant Bhatnagar
       
 # Application- 
+
+
+# Dataset link-
+    extract this file and move it to dataset folder
+
+    https://drive.google.com/file/d/1amA3zs6b2ySozb52wuHWFJkJ3tYTH-Xq/view?usp=sharing
+
+
+# Required library
+
+  pandas
+  numpy
+  open-cv
+  ..
