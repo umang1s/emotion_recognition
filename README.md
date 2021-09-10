@@ -4,7 +4,7 @@
   
   
 # Team-
-      Umang Maurya    [a link] ("https://github.com/umang1s")
+      Umang Maurya    https://github.com/umang1s
       
       Yateesh Chaturvedi
       
