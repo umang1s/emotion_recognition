@@ -6,7 +6,7 @@
 # Team-
       Umang Maurya    https://github.com/umang1s
       
-      Yateesh Chaturvedi
+      Yateesh Chaturvedi https://github.com/yateesh99
       
       Prashant Bhatnagar
       
