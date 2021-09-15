@@ -29,4 +29,5 @@
   pandas
   numpy
   open-cv
+  flask
   ..
