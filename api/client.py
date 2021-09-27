@@ -7,10 +7,8 @@ import pickle
 def start(IP,PORT):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((IP, PORT))
-    connection = client_socket.makefile('wb')
-
+    #connection = client_socket.makefile('wb')
     cam = cv2.VideoCapture(0)
-
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 60]
     total_frame=200
     cnt=0

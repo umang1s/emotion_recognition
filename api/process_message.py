@@ -9,4 +9,6 @@ def encodeEmotionsInBytes(recv_emotions):
     return response_data
     
 def convertInImage(data):
+    print(len(data))
+    #print(data)
     return data

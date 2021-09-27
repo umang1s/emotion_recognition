@@ -2,11 +2,12 @@ import socket
 import api.method as mt
 import api.process_message as pm
 
-def start(emotion_recogniser):
+def start(emotion_recogniser,max_connection):
     """It Creates API which accept image and call Processdata.
     
         ProcessData should return response in form of List(ResponseData)
     """
+    chunk_size=8192
     ip=mt.GetIp()
     HOST,PORT=ip[0],5500
     print("Activating API on %s:%d"%(HOST,PORT))
@@ -21,17 +22,19 @@ def start(emotion_recogniser):
     send_conn,send_addr=send_server.accept()
     print("Client connected : {}".format(recv_addr))
     send_data=b''
-    payload_size=4
     client_connected=True
     client_count=0
-    while client_count<200:
-        client_count+=1
+    while client_count<max_connection:
         if not client_connected:
+            client_count+=1
+            if(client_count==max_connection):
+                print("Quota completed")   
+                break
             recv_conn,recv_addr=recv_server.accept()
             send_conn,send_addr=send_server.accept()
             client_connected=True
-            print("New Client connected : %s"%recv_addr[0])
-        
+            print("New(%d) Client connected : %s"%(client_count+1,recv_addr[0]))
+        recv_msg_len=b''
         recv_msg_len=recv_conn.recv(10)
         if len(recv_msg_len)==0:
             client_connected=False 
@@ -39,11 +42,12 @@ def start(emotion_recogniser):
             send_conn.close()
             recv_conn.close()
         else:
-            msg_len=int(recv_msg_len,0)
+            msg_len=int(recv_msg_len.decode("utf-8"))
+            msg_len*=2
             recv_data=b''
             data_received=False
             while len(recv_data)<msg_len:
-                recv_byte_len=4096
+                recv_byte_len=chunk_size
                 diff_len=msg_len-len(recv_data)
                 if recv_byte_len >diff_len:
                     recv_byte_len=diff_len
