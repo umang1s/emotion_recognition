@@ -41,3 +41,5 @@ def getEmotionData(img):
         arr.append(mdl.EmotionData())
     cv2.imshow("Image",img)
     return mdl.ConvertEmotionDataToJsonFile(arr)
+
+using_open_cv_haarcascade()
