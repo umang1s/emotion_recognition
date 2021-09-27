@@ -1,4 +1,6 @@
-import api_creation as api
+import model.emotion as em
 
+def recogniseEmotion(img):
+    print(img)
 
-api.start()
+    return [em.EmotionData()]

@@ -1,4 +1,6 @@
-def GenerateQRCode(url,wantToView=True):    
+import urllib
+
+def GenerateQRCode(url,port,wantToView=True):    
     """ Generates QRCode.
 
         if wantToView==True:     it only show QR code on display.
@@ -7,12 +9,13 @@ def GenerateQRCode(url,wantToView=True):
     """
     import qrcode
     qr = qrcode.QRCode( version=1,  box_size=10,border=5)
-    qr.add_data(url)
+    qr.add_data(url+"&&%d"%port)
     qr.make(fit=True)
-    img = qr.make_image(fill='black', back_color='white')
+    img = qr.make_image(fill='black', back_color='pink')
     import matplotlib.pyplot as plt
     if wantToView:  
          plt.imshow(img)
+         plt.show()
     else:
         return img
 
@@ -32,3 +35,6 @@ def GetIp():
     return (local_ip,external_ip)
 
 
+if __name__=='__main__':
+    ip=GetIp()
+    GenerateQRCode(ip[0],5500)
