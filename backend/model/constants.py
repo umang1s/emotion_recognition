@@ -38,7 +38,7 @@ class Emotion:
         self.Value=value
 
 class HaarFile:
-    dir="F:/Project/python/emotion_recognition/data/haarcascades/"
+    dir=CURRENT_DIR+"data/haarcascades/"
     HFA=dir+"haarcascade_frontalface_alt.xml"
     HFA2=dir+"haarcascade_frontalface_alt2.xml"
     HFAC=dir+"haarcascade_frontalface_alt_cuda.xml"

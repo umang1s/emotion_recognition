@@ -7,8 +7,9 @@
     4:  Start API Server.
     5:  Start Client server.
 """  
-OPERATION=2
+OPERATION=3
 TIMEOUT=-1
+URL="http://192.168.0.177:4747/video?640x480"
 from backend.emotion_recognition import Emotion
 import backend.model.constants as cns
 import cv2
@@ -18,7 +19,7 @@ if __name__=="__main__":
     emotion=Emotion(cns.CNN,cns.HaarFile().HFD)
     if OPERATION==1:    #training
         print("\tStart Training...\n")
-        emotion.train_model(5)
+        emotion.train_model(40)
 
     elif emotion.load_model(): 
         if OPERATION==2:
@@ -26,7 +27,7 @@ if __name__=="__main__":
             stream = cv2.VideoCapture(0)
             older_time=time.time()
             p_time=older_time
-            if TIMEOUT<0: TIMEOUT=20
+            if TIMEOUT<0: TIMEOUT=30
             c_time=p_time
             fps=0
             while c_time- older_time<TIMEOUT:
@@ -53,22 +54,28 @@ if __name__=="__main__":
         elif OPERATION==3:
             import os
             print("Start Testing")
-            sum_data=0
-            total_data=0
-            #cv2.namedWindow("Emotion from image", cv2.WINDOW_NORMAL)
-            c_time=time.time()
-            #img=cv2.imread("data/sample/glasses.png")
-            img=cv2.imread(cns.TRAIN_DATA+"angry/im7.png")
-            datas=emotion.recognizeEmotion(img)
-            for (box,emo) in datas:
-                cv2.rectangle(img,box.minxy(),box.maxxy(),cns.GREEN,thickness=2)
-                if(emo.Value>0):
-                    cv2.putText(img,emo.Name+": %0.1f %c"%(emo.Value,chr(37)),box.text(),cv2.FONT_HERSHEY_PLAIN,3,cns.RED,2)
-                elif emo.Value==-1:
-                        cv2.putText(img,emo.Name,box.text(),cv2.FONT_HERSHEY_PLAIN,3,cns.RED,2)
-            cv2.putText(img,"%0.2fs"%(time.time()-c_time),(10,70),cv2.FONT_HERSHEY_PLAIN,3,cns.RED,2)
-            cv2.imshow("Emotion from image",img)
-            cv2.waitKey(0)
+            total_image=14
+            current=0
+            while current< total_image:
+                c_time=time.time()
+                current+=1
+                img=cv2.imread("data/sample/0%d.jpg"%current)
+                datas=emotion.recognizeEmotion(img)
+                for (box,emo) in datas:
+                    cv2.rectangle(img,box.minxy(),box.maxxy(),cns.GREEN,thickness=2)
+                    if(emo.Value>0):
+                        cv2.putText(img,emo.Name+": %0.1f %c"%(emo.Value,chr(37)),box.text(),cv2.FONT_HERSHEY_PLAIN,3,cns.RED,2)
+                        if(emo.Name==cns.EMOTIONS[(current-1)%7]):
+                            cv2.putText(img,"Right",(10,100),cv2.FONT_HERSHEY_PLAIN,2,cns.GREEN,2)
+                        else:
+                            cv2.putText(img,"Wrong",(10,100),cv2.FONT_HERSHEY_PLAIN,2,cns.RED,2)
+                    elif emo.Value==-1:
+                            cv2.putText(img,emo.Name,box.text(),cv2.FONT_HERSHEY_PLAIN,3,cns.RED,2)
+                cv2.putText(img,"%0.2fs"%(time.time()-c_time),(5,40),cv2.FONT_HERSHEY_PLAIN,2,cns.RED,2)
+                cv2.imshow("Emotion from image %d"%current,img)
+                if cv2.waitKey(3000)==ord('q'):
+                    break
+                cv2.destroyAllWindows()
 
 
         elif OPERATION==4:

@@ -4,6 +4,8 @@ import mediapipe as mp
 import cv2
 from keras.preprocessing import image
 import numpy as np
+import backend.cnn_train as ct
+import backend.our_train as ot
 class Emotion:
 
     def __init__(self,model_algorithm,haarfile="null"):
@@ -67,12 +69,9 @@ class Emotion:
         img_pixels = np.expand_dims(img_pixels, axis = 0)
         return img_pixels
 
-
     def train_model(self,epoch=2):
         if self.ModelAlgo==constants.CNN:
-            import backend.cnn_train as ct
             ct.start_training(epoch,constants.CURRENT_DIR)
 
         else:
-            import backend.our_train as ot
             ot.start_training()
