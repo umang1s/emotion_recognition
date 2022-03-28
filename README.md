@@ -6,10 +6,7 @@
 # Team-
       Umang Maurya    https://github.com/umang1s
       
-      Yateesh Chaturvedi https://github.com/yateesh99
-      
-      Prashant Bhatnagar
-      
+      Yateesh Chaturvedi https://github.com/yateesh99      
 # Application- 
 
 
@@ -29,5 +26,4 @@
   pandas
   numpy
   open-cv
-  flask
   ..

@@ -5,7 +5,6 @@ import time
 TIMEOUT=-1
 URL="0"
 EMOTIONS=["angry","disgusted","fearful","happy","neutral","sad","surprised"] #don't update
-TEST_WITH={3,4,6}
 RED=(0,0,255)
 BLUE=(255,0,0)
 GREEN=(0,255,0)
@@ -31,7 +30,7 @@ class HaarFile:
 if __name__=="__main__":
     print("Starting ....")
 
-    emotion=Emotion(TEST_WITH,haarfile=HaarFile.HFA)
+    emotion=Emotion()
     print("Opening Camera")
     stream = cv2.VideoCapture(0)
     if len(URL)>10:
