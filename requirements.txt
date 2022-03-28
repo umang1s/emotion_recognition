@@ -1,0 +1,6 @@
+mediapipe
+openvcv-python
+numpy
+panda
+os
+tensorflow
